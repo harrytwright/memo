@@ -4,16 +4,17 @@
 
 import React, { useContext, useCallback } from 'react'
 
-import ChessProvider from "../ChessProvider";
-import ChessContext from "../../contexts/ChessContext";
+import ChessProvider from '../ChessProvider'
 
-const TestConsumer = () => {
-  const { fen, move, game } = useContext(ChessContext)
+import withChess from "../../hooks/withChess";
+
+const TestConsumer = withChess(({ move, game }) => {
+  // const { fen, move, game } = useC(ChessContext)
 
   const handleClick = useCallback(() => {
-    const moves = game.moves({verbose:true});
-    const { san } = moves[Math.floor(Math.random() * moves.length)];
-    move(san);
+    const moves = game.moves({ verbose: true })
+    const { san } = moves[Math.floor(Math.random() * moves.length)]
+    move(san)
   }, [move, game])
 
   return (
@@ -22,13 +23,13 @@ const TestConsumer = () => {
       <span style={{ width: '100%' }}>{game.pgn()}</span>
     </div>
   )
-}
+})
 
 //  fen='8/1BP2p2/6r1/1r1RP3/K1n3Pp/2Pp4/1q2Q3/7k w - - 0 1'
 export default function App () {
   return (
     <div style={{ width: '720px', marginLeft: 'auto', marginRight: 'auto' }}>
-      <ChessProvider>
+      <ChessProvider defaultFen='8/1BP2p2/6r1/1r1RP3/K1n3Pp/2Pp4/1q2Q3/7k w - - 0 1' variant='chess960'>
         <TestConsumer />
       </ChessProvider>
     </div>

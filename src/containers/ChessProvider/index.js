@@ -4,19 +4,23 @@
  * This is the game state management, from here any child hooks/containers can
  * access the state of the game, and see the last moves
  *
+ * Could maybe use memo to have this a little better
  * */
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from 'react'
+import PropTypes from 'prop-types'
 
 import Chess from 'chess.js'
 
-import ChessContext from "../../contexts/ChessContext";
+import ChessContext from '../../contexts/ChessContext'
+
+let hasWarned = false
 
 const fullTurnName = (colour) => colour === 'w' ? 'white' : 'black'
 
 /**
  * The chess game state management, maybe a little redundant but will work here.
  * */
-const ChessProvider = ({ children, defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' }) => {
+const ChessProvider = ({ children, defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', variant }) => {
   /**
    * Seems to stop the bellow functions causing render issues
    * */
@@ -37,13 +41,13 @@ const ChessProvider = ({ children, defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPP
    * */
   const handleMove = useCallback((sanOrOrig, dest) => {
     let moveObj
-    if(dest) {
-      moveObj = { from: sanOrOrig, to: dest, promotion: 'q'}
+    if (dest) {
+      moveObj = { from: sanOrOrig, to: dest, promotion: 'q' }
     } else {
       moveObj = sanOrOrig
     }
 
-    let move = game.move(moveObj)
+    const move = game.move(moveObj)
     setState({ fen: game.fen(), lastMove: move })
   }, [game])
 
@@ -54,11 +58,22 @@ const ChessProvider = ({ children, defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPP
     fullTurnName(game.turn())
   }
 
+  if (!!variant && !hasWarned) {
+    console.warn('Variants have not be set up just yet')
+    hasWarned = true
+  }
+
   return (
     <ChessContext.Provider value={{ fen: state.fen, lastMove: state.lastMove, move: handleMove, turnColor, game }}>
       {children}
     </ChessContext.Provider>
   )
+}
+
+ChessProvider.propTypes = {
+  children: PropTypes.node,
+  defaultFen: PropTypes.string,
+  variant: PropTypes.string
 }
 
 export default ChessProvider

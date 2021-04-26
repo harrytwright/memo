@@ -8,8 +8,6 @@
 
 import { createContext } from 'react'
 
-const ChessContext = createContext({
-  game: null
-})
+const ChessContext = createContext(null)
 
 export default ChessContext

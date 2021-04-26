@@ -4,9 +4,9 @@
  * HOC for the chess context
  * */
 
-import React from "react";
+import React from 'react'
 
-import useChess from "../useChess";
+import useChess from '../useChess'
 
 const withChess = (Component) => (props) => {
   const ctx = useChess()

@@ -6,7 +6,7 @@
 
 import { useContext } from 'react'
 
-import ChessContext from "../../contexts/ChessContext";
+import ChessContext from '../../contexts/ChessContext'
 
 const useChess = () => {
   const ctx = useContext(ChessContext)
