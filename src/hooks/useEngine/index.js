@@ -31,29 +31,30 @@ const useEngine = () => {
    * @param {UCICommand} command
    * */
   const send = useCallback((command) => {
+    console.log(command)
     engine.postMessage(command)
   }, [engine])
 
-  /**
-   * Handle the response from the engine
-   *
-   * @param {StockfishMessageHandler} callback
-   * */
-  const handleMessage = useCallback((callback) => {
-    engine.onmessage = callback
-  }, [engine])
+  // /**
+  //  * Handle the response from the engine
+  //  *
+  //  * @param {StockfishMessageHandler} callback
+  //  * */
+  // const handleMessage = useCallback((callback) => {
+  //   engine.onmessage = callback
+  // }, [engine])
 
-  /**
-   * A fake engine object to just change the way Stockfish response is handled
-   * */
-  const ngin = {
-    /**
-     * @param {Function} callback
-     * */
-    onMessage: handleMessage
-  }
+  // /**
+  //  * A fake engine object to just change the way Stockfish response is handled
+  //  * */
+  // const ngin = {
+  //   /**
+  //    * @param {Function} callback
+  //    * */
+  //   onMessage: handleMessage
+  // }
 
-  return [ngin, send]
+  return [engine, send]
 }
 
 export default useEngine

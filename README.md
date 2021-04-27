@@ -31,3 +31,17 @@ engine.onMessage((line) => {
 ### `withMemo` or `MemorisationEngine`
 
 > This is the code for setting up the memorisation table, could be built into the page, or here, will see
+
+```jsx
+
+// Game
+const GameRender = () => {
+  return (
+    <Game player={} opponent={} clock={}>
+
+    </Game>
+  )
+}
+
+// 
+```

@@ -4,9 +4,8 @@
  * Hook for the chess context
  * */
 
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 // import PropTypes from 'prop-types'
-
 import Chess from 'chess.js'
 
 // import ChessContext from '../../contexts/ChessContext'
@@ -34,10 +33,10 @@ const useChess = (defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQ
   /**
    * Handle the move, should allow for both UCI moves, and board moves via chessground
    * */
-  const handleMove = useCallback((sanOrOrig, dest) => {
+  const handleMove = useCallback((sanOrOrig, dest, promotion = 'q') => {
     let moveObj
     if (dest) {
-      moveObj = { from: sanOrOrig, to: dest, promotion: 'q' }
+      moveObj = { from: sanOrOrig, to: dest, promotion }
     } else {
       moveObj = sanOrOrig
     }
@@ -49,16 +48,39 @@ const useChess = (defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQ
   /**
    * Just a helper function to get the full name of the turn color
    * */
-  const turnColor = () => {
-    fullTurnName(game.turn())
-  }
+  const turnColor = useCallback(() => fullTurnName(game.turn()), [game])
+
+  /**
+   * @param mode - The game mode to play
+   * @param player - The player color
+   * */
+  const handleMovable = useCallback((mode = 'analysis', player = 'white') => {
+    const dests = new Map()
+    game.SQUARES.forEach(s => {
+      const ms = game.moves({ square: s, verbose: true })
+      if (ms.length) dests.set(s, ms.map(m => m.to))
+    })
+
+    return {
+      free: false,
+      dests,
+      color: mode === 'analysis' ? turnColor() : player
+    }
+  }, [game, turnColor])
 
   if (!!variant && !hasWarned) {
     console.warn('Variants have not be set up just yet')
     hasWarned = true
   }
 
-  return [state.fen, state.lastMove, handleMove, turnColor, game]
+  return useMemo(() => ({
+    fen: state.fen,
+    lastMove: state.lastMove,
+    handleMove,
+    handleMovable,
+    turnColor,
+    game
+  }), [state, game, handleMove, handleMovable, turnColor])
 }
 
 export default useChess

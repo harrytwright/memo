@@ -7,10 +7,12 @@ import React, { useContext, useCallback } from 'react'
 // import ChessProvider from '../ChessProvider'
 
 // import withChess from "../../hooks/withChess";
-import useChess from "../../hooks/useChess";
+import useChess from '../../hooks/useChess'
+import TestPage from '../TestPage'
+import Evaluation from '../Evaluation'
 
 const TestConsumer = ({ defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', variant }) => {
-  const [ fen, lastMove, move, turn, game ] = useChess(defaultFen, variant)
+  const [fen, lastMove, move, turn, game] = useChess(defaultFen, variant)
 
   const handleClick = useCallback(() => {
     const moves = game.moves({ verbose: true })
@@ -30,9 +32,10 @@ const TestConsumer = ({ defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBN
 export default function App () {
   return (
     <div style={{ width: '720px', marginLeft: 'auto', marginRight: 'auto' }}>
-      <TestConsumer defaultFen='8/1BP2p2/6r1/1r1RP3/K1n3Pp/2Pp4/1q2Q3/7k w - - 0 1' variant='chess960'>
-        {/*<TestConsumer />*/}
-      </TestConsumer>
+      {/* <TestConsumer defaultFen='8/1BP2p2/6r1/1r1RP3/K1n3Pp/2Pp4/1q2Q3/7k w - - 0 1' variant='chess960'> */}
+      {/*  /!*<TestConsumer />*!/ */}
+      {/* </TestConsumer> */}
+      <Evaluation fen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' />
     </div>
   )
 }
