@@ -31,7 +31,6 @@ const useEngine = () => {
    * @param {UCICommand} command
    * */
   const send = useCallback((command) => {
-    console.log(command)
     engine.postMessage(command)
   }, [engine])
 

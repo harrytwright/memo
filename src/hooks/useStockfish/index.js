@@ -32,8 +32,6 @@ function reducer (state, action) {
 }
 
 const useStockfish = (startpos, game, onBestMove, fen, color ) => {
-  console.log(startpos, game, fen, color);
-
   const [status, dispatch] = useReducer(reducer, initialState)
 
   const [engine, send] = useEngine()
