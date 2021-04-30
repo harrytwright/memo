@@ -1,24 +1,18 @@
 /**
  * useChess.js
  *
- * Hook for the chess context
+ * A more in depth look for the chess context, that allows for manipulating the game
+ * that comes from `ChessLogicContext`
  * */
 
-import React, { useCallback, useMemo, useState } from 'react'
-// import PropTypes from 'prop-types'
-import Chess from 'chess.js'
+import { useCallback, useMemo, useState } from 'react'
 
-// import ChessContext from '../../contexts/ChessContext'
-
-let hasWarned = false
+import useChessLogic from '../useChessLogic'
 
 const fullTurnName = (colour) => colour === 'w' ? 'white' : 'black'
 
-const useChess = (defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1', variant) => {
-  /**
-   * Seems to stop the bellow functions causing render issues
-   * */
-  const game = useMemo(() => Chess(defaultFen), [defaultFen])
+const useChess = () => {
+  const game = useChessLogic()
 
   /**
    * Most important data to hold, the rest can be deciphered from the game object itself
@@ -67,11 +61,6 @@ const useChess = (defaultFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQ
       color: mode === 'analysis' ? turnColor() : player
     }
   }, [game, turnColor])
-
-  if (!!variant && !hasWarned) {
-    console.warn('Variants have not be set up just yet')
-    hasWarned = true
-  }
 
   return useMemo(() => ({
     fen: state.fen,

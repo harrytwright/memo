@@ -32,14 +32,30 @@ engine.onMessage((line) => {
 
 > This is the code for setting up the memorisation table, could be built into the page, or here, will see
 
+## Basic Idea of UI logic
+
 ```jsx
+const useChess = () => {
+  const game = useChessProvider()
 
-// Game
-const GameRender = () => {
+  // ...
+
+  return {..., game}
+}
+
+const Game = withChessProvider({ player, opponent }) => {
+  const { fen, lastMove, handleMove } = useChess()
+
+  // ...
+
   return (
-    <Game player={} opponent={} clock={}>
+    <Chessground fen={fen} lastMove={lastMove} onMove={handleMove} />
+  )
+})
 
-    </Game>
+const App = () => {
+  return (
+    <Game player={{ name: 'Hello' }} opponent={{ name: 'World' }} />
   )
 }
 
