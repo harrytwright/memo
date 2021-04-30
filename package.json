@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "chess.js": "^0.11.0",
     "chessground": "^7.11.1",
+    "clsx": "^1.1.1",
     "connected-react-router": "^6.9.1",
     "glob": "^7.1.6",
     "history": "^4.10.1",
@@ -23,6 +24,7 @@
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
     "stockfish": "^11.0.0",
+    "styled-components": "^5.2.3",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

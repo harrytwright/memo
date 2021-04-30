@@ -84,6 +84,6 @@ export default class Chessground extends React.Component {
     if (this.props.height) {
       props.style.height = this.props.height
     }
-    return <div ref={el => this.el = el} {...props} />
+    return <span ref={el => this.el = el} {...props} />
   }
 }

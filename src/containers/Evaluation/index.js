@@ -77,8 +77,10 @@ const Evaluation = ({ fen: startingFen, playerColor = 'white', ...rest }) => {
   const lastMoveArray = lastMove ? [lastMove.from, lastMove.to] : null
 
   return (
-    <Chessground fen={fen} onMove={handleLogic} lastMove={lastMoveArray} turnColor={turnColor()}
-                 draggable={{ showGhosts: true }} movable={handleMovable('analysis', playerColor)} />
+    <Chessground
+      fen={fen} onMove={handleLogic} lastMove={lastMoveArray} turnColor={turnColor()}
+      draggable={{ showGhosts: true }} movable={handleMovable('analysis', playerColor)}
+    />
   )
 }
 

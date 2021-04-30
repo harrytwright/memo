@@ -31,7 +31,7 @@ function reducer (state, action) {
   }
 }
 
-const useStockfish = (startpos, game, onBestMove, fen, color ) => {
+const useStockfish = (startpos, game, onBestMove, fen, color) => {
   const [status, dispatch] = useReducer(reducer, initialState)
 
   const [engine, send] = useEngine()
@@ -114,7 +114,7 @@ const useStockfish = (startpos, game, onBestMove, fen, color ) => {
     prepareMove(9)
   })
 
-  return useMemo(() => [prepareMove], [prepareMove]);
+  return useMemo(() => [prepareMove], [prepareMove])
 }
 
 export default useStockfish
